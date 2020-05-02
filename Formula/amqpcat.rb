@@ -10,8 +10,9 @@ class Amqpcat < Formula
   def install
     system "shards", "build",
                      "--release",
-                     "--production"
-    system "install", "--strip", "bin/amqpcat", bin
+                     "--production",
+                     "--no-debug"
+    bin.install "bin/amqpcat"
   end
 
   test do
