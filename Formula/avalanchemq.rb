@@ -1,4 +1,4 @@
-class Amqpcat < Formula
+class Avalanchemq < Formula
   desc "AMQP 0-9-1 server"
   homepage "https://github.com/cloudamqp/avalanchemq"
   url "https://github.com/cloudamqp/avalanchemq/archive/v1.0.0-alpha.23.tar.gz"
