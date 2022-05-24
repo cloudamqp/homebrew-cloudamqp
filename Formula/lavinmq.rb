@@ -8,7 +8,7 @@ class Lavinmq < Formula
   depends_on "crystal" => :build
 
   def install
-    system "make" "all"
+    system "make", "all"
     bin.install "bin/lavinmq"
     bin.install "bin/lavinmqctl"
     bin.install "bin/lavinmqperf"
