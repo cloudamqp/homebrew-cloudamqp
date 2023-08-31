@@ -1,8 +1,8 @@
 class Sparoid < Formula
   desc "SPA client"
   homepage "https://github.com/84codes/sparoid"
-  url "https://github.com/84codes/sparoid/archive/v1.1.11.tar.gz"
-  sha256 "29606ef48e5600a521b4cb733489725383959acb78959290387682f936f5d833"
+  url "https://github.com/84codes/sparoid/archive/v1.1.12.tar.gz"
+  sha256 "5f6b6daf553adff3b2aa6dcfad99896e3069f16133cab1bdadda7ccd1ca6e43e"
   head "https://github.com/84codes/sparoid.git"
 
   depends_on "crystal" => :build
