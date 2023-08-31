@@ -7,27 +7,20 @@ class Sparoid < Formula
 
   depends_on "crystal" => :build
 
-
   def install
     components = ["sparoid"]
-    on_linux do
-      components << "sparoid-server"
-    end
+    components << "sparoid-server" if OS.linux?
 
     system "shards", "build",
                      "--release",
                      "--production",
                      *components
     bin.install "bin/sparoid"
-    on_linux do
-      bin.install "bin/sparoid-server"
-    end
+    bin.install "bin/sparoid-server" if OS.linux?
   end
 
   test do
     system "#{bin}/sparoid", "--version"
-    on_linux do
-      system "#{bin}/sparoid-server", "--version"
-    end
+    system "#{bin}/sparoid-server", "--version" if OS.linux?
   end
 end
