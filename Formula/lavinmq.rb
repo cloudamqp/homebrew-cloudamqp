@@ -1,8 +1,8 @@
 class Lavinmq < Formula
   desc "Fast and efficient AMQP 0-9-1 server"
   homepage "https://www.lavinmq.com"
-  url "https://github.com/cloudamqp/lavinmq/archive/v1.0.0-beta.8.tar.gz"
-  sha256 "e0c7a90bc0b240f2dcf118a9c922c4b0ee604f19dfb2ed0b7137cb73af8abe3b"
+  url "https://github.com/cloudamqp/lavinmq/archive/v1.2.4.tar.gz"
+  sha256 "506baacac7c0fa34add959b517da19dec1db5537434f660c5cded51dff227e4f"
   head "https://github.com/cloudamqp/lavinmq.git"
 
   depends_on "crystal" => :build
