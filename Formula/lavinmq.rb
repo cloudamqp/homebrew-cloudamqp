@@ -1,7 +1,7 @@
 class Lavinmq < Formula
   desc "Fast and efficient AMQP 0-9-1 server"
   homepage "https://www.lavinmq.com"
-  url "https://github.com/cloudamqp/lavinmq/archive/v1.2.4.tar.gz"
+  url "https://github.com/cloudamqp/lavinmq/archive/refs/tags/v1.2.4.tar.gz"
   sha256 "506baacac7c0fa34add959b517da19dec1db5537434f660c5cded51dff227e4f"
   head "https://github.com/cloudamqp/lavinmq.git"
 
