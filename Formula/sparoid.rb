@@ -1,7 +1,7 @@
 class Sparoid < Formula
   desc "SPA client"
   homepage "https://github.com/84codes/sparoid"
-  url "https://github.com/84codes/sparoid/archive/refs/tags/v1.1.12.tar.gz"
+  url "https://github.com/84codes/sparoid/archive/v1.1.12.tar.gz"
   sha256 "5f6b6daf553adff3b2aa6dcfad99896e3069f16133cab1bdadda7ccd1ca6e43e"
   head "https://github.com/84codes/sparoid.git"
 

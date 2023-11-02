@@ -1,8 +1,8 @@
 class Amqpcat < Formula
   desc "CLI tool for publishing to and consuming from AMQP servers"
   homepage "https://github.com/cloudamqp/amqpcat"
-  url "https://github.com/cloudamqp/amqpcat/archive/refs/tags/v0.2.5.tar.gz"
-  sha256 "05917d52a06bdd7a45e85f620117a93f9caa0747f2468a65862d53b8b7ca6999"
+  url "https://github.com/cloudamqp/amqpcat/archive/v0.2.4.tar.gz"
+  sha256 "4dccbd37e4cee1bc0119748921c9bbce86137bc6ba870b1861823ce76a09e3eb"
   head "https://github.com/cloudamqp/amqpcat.git"
 
   depends_on "crystal" => :build
