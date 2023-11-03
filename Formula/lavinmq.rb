@@ -5,8 +5,8 @@ class Lavinmq < Formula
   sha256 "506baacac7c0fa34add959b517da19dec1db5537434f660c5cded51dff227e4f"
   head "https://github.com/cloudamqp/lavinmq.git"
 
-  depends_on "node"
   depends_on "crystal" => :build
+  depends_on "node"
 
   def install
     system "make", "all"
