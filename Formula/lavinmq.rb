@@ -20,7 +20,7 @@ class Lavinmq < Formula
   end
 
   service do
-    run [opt_bin/"lavinmq", "-D", "/opt/homebrew/var/lavinmq"]
+    run [opt_bin/"lavinmq", "-D", var/"lavinmq"]
   end
 
   test do
