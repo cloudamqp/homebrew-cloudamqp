@@ -19,6 +19,10 @@ class Lavinmq < Formula
     bin.install "bin/lavinmqperf"
   end
 
+  service do
+    run [opt_bin/"lavinmq", "-D", var/"lavinmq"]
+  end
+
   test do
     system "#{bin}/lavinmq", "--version"
     system "#{bin}/lavinmqctl", "--version"
