@@ -26,10 +26,19 @@ class Lavinmq < Formula
     man1.install "man1/lavinmq.1"
     man1.install "man1/lavinmqctl.1"
     man1.install "man1/lavinmqperf.1"
+
+    pkgetc.install "extras/lavinmq.ini"
+    inreplace lavinmq_config do |s|
+      s.gsub!(/^data_dir.*/, "data_dir = #{var}/lavinmq")
+    end
+  end
+
+  def lavinmq_config
+    pkgetc/"lavinmq.ini"
   end
 
   service do
-    run [opt_bin / "lavinmq", "-D", var / "lavinmq"]
+    run [opt_bin/"lavinmq", "-c", lavinmq_config]
   end
 
   test do
