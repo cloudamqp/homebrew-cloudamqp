@@ -6,8 +6,8 @@ class Lavinmq < Formula
   head "https://github.com/cloudamqp/lavinmq.git"
 
   depends_on "crystal" => :build
-  depends_on "openssl" => :build
   depends_on "help2man" => :build
+  depends_on "openssl" => :build
   depends_on "bdw-gc"
   depends_on "libevent"
   depends_on "lz4"
