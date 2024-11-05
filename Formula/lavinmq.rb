@@ -40,7 +40,7 @@ class Lavinmq < Formula
   end
 
   service do
-    run [opt_bin/"lavinmq", "-c", lavinmq_config]
+    run [opt_bin/"lavinmq", "-c", etc/"lavinmq/lavinmq.ini"]
   end
 
   test do
