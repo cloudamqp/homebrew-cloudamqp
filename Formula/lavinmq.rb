@@ -14,7 +14,8 @@ class Lavinmq < Formula
 
   def install
     system "make", "bin/lavinmq", "bin/lavinmqperf", "DOCS="
-    system "crystal", "build", "src/lavinmqctl.cr", "-o", "bin/lavinmqctl", "--release", "--error-on-warnings", "--link-flags=-pie"
+    system "crystal", "build", "src/lavinmqctl.cr", "-o", "bin/lavinmqctl", "--release", "--error-on-warnings",
+      "--link-flags=-pie"
     bin.install "bin/lavinmq"
     bin.install "bin/lavinmqctl"
     bin.install "bin/lavinmqperf"
