@@ -6,6 +6,7 @@ class Lavinmq < Formula
   head "https://github.com/cloudamqp/lavinmq.git"
 
   depends_on "crystal" => :build
+  depends_on "help2man" => :build
   depends_on "openssl" => :build
   depends_on "bdw-gc"
   depends_on "libevent"
@@ -16,9 +17,15 @@ class Lavinmq < Formula
     system "make", "bin/lavinmq", "bin/lavinmqperf", "DOCS="
     system "crystal", "build", "src/lavinmqctl.cr", "-o", "bin/lavinmqctl", "--release", "--error-on-warnings",
       "--link-flags=-pie"
+    system "make", "man"
+
     bin.install "bin/lavinmq"
     bin.install "bin/lavinmqctl"
     bin.install "bin/lavinmqperf"
+
+    man1.install "man1/lavinmq.1"
+    man1.install "man1/lavinmqctl.1"
+    man1.install "man1/lavinmqperf.1"
   end
 
   service do
