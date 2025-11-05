@@ -3,7 +3,7 @@ class Lavinmq < Formula
   homepage "https://www.lavinmq.com"
   url "https://github.com/cloudamqp/lavinmq/archive/refs/tags/v2.5.0.tar.gz"
   sha256 "84f11d21327159f9e4081cd8b4fa12d650d9aee6112d511ccb6142b1705ff2ad"
-  head "https://github.com/cloudamqp/lavinmq.git"
+  head "https://github.com/cloudamqp/lavinmq.git", branch: "main"
 
   depends_on "crystal" => :build
   depends_on "help2man" => :build
