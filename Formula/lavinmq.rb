@@ -47,8 +47,8 @@ class Lavinmq < Formula
   end
 
   test do
-    system "#{bin}/lavinmq", "--version"
-    system "#{bin}/lavinmqctl", "--version"
-    system "#{bin}/lavinmqperf", "--version"
+    assert_match version.to_s, shell_output("#{bin}/lavinmq --version")
+    assert_match version.to_s, shell_output("#{bin}/lavinmqctl --version")
+    assert_match "throughput", shell_output("#{bin}/lavinmqperf --help")
   end
 end
