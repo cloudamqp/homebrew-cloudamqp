@@ -38,6 +38,10 @@ class Lavinmq < Formula
     pkgetc/"lavinmq.ini"
   end
 
+  def post_install
+    (var/"lavinmq").mkpath
+  end
+
   service do
     run [opt_bin/"lavinmq", "-c", etc/"lavinmq/lavinmq.ini"]
   end
