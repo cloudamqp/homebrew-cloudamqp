@@ -1,5 +1,5 @@
 class Lavinmq < Formula
-  desc "Fast and efficient AMQP 0-9-1 server"
+  desc "The Message Broker built for peaks"
   homepage "https://www.lavinmq.com"
   url "https://github.com/cloudamqp/lavinmq/archive/refs/tags/v2.5.5.tar.gz"
   sha256 "8a7b3d243c4c252cbf40ec9a0429a7093075c7ead11ec200141fc4884c001f3c"
