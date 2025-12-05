@@ -15,9 +15,7 @@ class Lavinmq < Formula
   depends_on "pcre2"
 
   def install
-    system "make", "bin/lavinmq", "bin/lavinmqperf", "DOCS="
-    system "crystal", "build", "src/lavinmqctl.cr", "-o", "bin/lavinmqctl", "--release", "--error-on-warnings",
-      "--link-flags=-pie"
+    system "make", "bin/lavinmq", "bin/lavinmqctl", "bin/lavinmqperf", "DOCS="
     system "make", "man"
 
     bin.install "bin/lavinmq"
