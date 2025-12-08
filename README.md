@@ -8,7 +8,7 @@ Or `brew tap cloudamqp/cloudamqp` and then `brew install <formula>`.
 Or install via URL (which will not receive updates):
 
 ```
-brew install https://raw.githubusercontent.com/cloudamqp/homebrew-cloudamqp/master/Formula/<formula>.rb
+brew install https://raw.githubusercontent.com/cloudamqp/homebrew-cloudamqp/main/Formula/<formula>.rb
 ```
 
 ## Documentation
