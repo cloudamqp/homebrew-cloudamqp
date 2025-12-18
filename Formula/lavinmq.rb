@@ -9,7 +9,6 @@ class Lavinmq < Formula
   depends_on "crystal" => :build
   depends_on "help2man" => :build
   depends_on "bdw-gc"
-  depends_on "libevent"
   depends_on "lz4"
   depends_on "openssl"
   depends_on "pcre2"
