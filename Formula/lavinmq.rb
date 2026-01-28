@@ -1,8 +1,8 @@
 class Lavinmq < Formula
   desc "Message Broker built for peaks"
   homepage "https://www.lavinmq.com"
-  url "https://github.com/cloudamqp/lavinmq/archive/refs/tags/v2.6.2.tar.gz"
-  sha256 "e02459d4eb659664bd7df5a58d98bf11bf97776c4c07b830cbee06fe2ec685e0"
+  url "https://github.com/cloudamqp/lavinmq/archive/refs/tags/v2.6.5.tar.gz"
+  sha256 "38d02947bea97b944cf66992980c852f08eb8f54920fddc0dd503b6a037fad9b"
   license "Apache-2.0"
   head "https://github.com/cloudamqp/lavinmq.git", branch: "main"
 
