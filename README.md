@@ -16,6 +16,24 @@ brew install https://raw.githubusercontent.com/cloudamqp/homebrew-cloudamqp/main
 
 `brew help`, `man brew` or check [Homebrew's documentation](https://docs.brew.sh).
 
+## Updating formulas
+
+To update a formula to a new version:
+
+```shell
+./update_formula.sh <formula> <version>
+```
+
+For example:
+
+```shell
+./update_formula.sh lavinmq 2.6.9
+./update_formula.sh amqpcat 1.0.3
+./update_formula.sh sparoid 1.1.13
+```
+
+The script downloads the release tarball, computes the SHA256 checksum, and updates the formula file.
+
 ## Development
 
 How to test PRs/branches of this repo:
