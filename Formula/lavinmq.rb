@@ -1,5 +1,5 @@
 class Lavinmq < Formula
-  desc "Message Broker built for peaks"
+  desc "Message broker implementing the AMQP 0-9-1 and MQTT protocols"
   homepage "https://www.lavinmq.com"
   url "https://github.com/cloudamqp/lavinmq/archive/refs/tags/v2.6.8.tar.gz"
   sha256 "f94c0a78a687ae6f5a66cdea81ace0e70ebc00981418e353fe14b26555d64a7a"
