@@ -25,16 +25,10 @@ class Lavinmq < Formula
     man1.install "man1/lavinmqctl.1"
     man1.install "man1/lavinmqperf.1"
 
-    unless lavinmq_config.exist?
+    unless (pkgetc/"lavinmq.ini").exist?
       pkgetc.install "extras/lavinmq.ini"
-      inreplace lavinmq_config do |s|
-        s.gsub!(/^data_dir.*/, "data_dir = #{var}/lavinmq")
-      end
+      inreplace pkgetc/"lavinmq.ini", /^data_dir.*/, "data_dir = #{var}/lavinmq"
     end
-  end
-
-  def lavinmq_config
-    pkgetc/"lavinmq.ini"
   end
 
   def post_install
