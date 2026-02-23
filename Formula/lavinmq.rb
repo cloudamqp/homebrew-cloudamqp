@@ -43,6 +43,7 @@ class Lavinmq < Formula
 
   service do
     run [opt_bin/"lavinmq", "-c", etc/"lavinmq/lavinmq.ini"]
+    keep_alive true
   end
 
   test do
