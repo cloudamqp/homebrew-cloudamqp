@@ -41,8 +41,14 @@ class Lavinmq < Formula
   end
 
   test do
-    assert_match version.to_s, shell_output("#{bin}/lavinmq --version")
-    assert_match version.to_s, shell_output("#{bin}/lavinmqctl --version")
-    assert_match "throughput", shell_output("#{bin}/lavinmqperf --help")
+    pid = fork do
+      exec bin/"lavinmq", "--data-dir", testpath/"data"
+    end
+    sleep 3
+    output = shell_output("#{bin}/lavinmqctl status")
+    assert_match "Uptime", output
+  ensure
+    Process.kill("TERM", pid)
+    Process.wait(pid)
   end
 end
