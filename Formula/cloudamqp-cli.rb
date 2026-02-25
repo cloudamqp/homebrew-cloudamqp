@@ -1,4 +1,4 @@
-class Cloudamqp < Formula
+class CloudamqpCli < Formula
   desc "CLI tool for managing CloudAMQP instances"
   homepage "https://github.com/cloudamqp/cli"
   url "https://github.com/cloudamqp/cli/archive/refs/tags/v0.2.0.tar.gz"
