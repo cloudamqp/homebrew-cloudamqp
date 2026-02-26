@@ -16,6 +16,16 @@ brew install https://raw.githubusercontent.com/cloudamqp/homebrew-cloudamqp/main
 
 `brew help`, `man brew` or check [Homebrew's documentation](https://docs.brew.sh).
 
+## Updating formulas
+
+To bump a formula to a new version:
+
+```shell
+brew bump-formula-pr --no-fork --version=<version> <formula>
+```
+
+This will download the release tarball, compute the SHA256, update the formula, and create a PR.
+
 ## Development
 
 How to test PRs/branches of this repo:
