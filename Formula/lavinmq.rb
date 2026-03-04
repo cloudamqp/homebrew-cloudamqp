@@ -13,6 +13,10 @@ class Lavinmq < Formula
   depends_on "openssl@3"
   depends_on "pcre2"
 
+  on_linux do
+    depends_on "pkgconf" => :build
+  end
+
   def install
     system "make", "bin/lavinmq", "bin/lavinmqctl", "bin/lavinmqperf", "DOCS="
     system "make", "man"
