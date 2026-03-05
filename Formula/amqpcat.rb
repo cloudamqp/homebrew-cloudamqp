@@ -6,10 +6,10 @@ class Amqpcat < Formula
   head "https://github.com/cloudamqp/amqpcat.git", branch: "main"
 
   depends_on "crystal" => :build
-  depends_on "openssl@3"
+  depends_on "openssl@3" => :build
 
   def install
-    system "shards", "build", "--release", "--production", "--no-debug"
+    system "shards", "build", "--release", "--production", "--no-debug", "--static"
     bin.install "bin/amqpcat"
   end
 
