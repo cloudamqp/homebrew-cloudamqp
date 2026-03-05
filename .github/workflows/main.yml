@@ -32,5 +32,14 @@ jobs:
       - run: brew test-bot --only-cleanup-before
       - run: brew test-bot --only-setup
       - run: brew test-bot --only-tap-syntax
-      - run: brew test-bot --only-formulae
+      - name: Build formulae
+        run: |
+          set +e
+          brew test-bot --only-formulae 2>&1 | tee test-bot.log
+          exit_code=$?
+          if [ $exit_code -ne 0 ] || grep -q "^==> FAILED" test-bot.log; then
+            echo "::error::brew test-bot failed"
+            exit 1
+          fi
         if: github.event_name == 'pull_request'
+        shell: bash
