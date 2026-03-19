@@ -6,7 +6,7 @@ class Sparoid < Formula
   head "https://github.com/84codes/sparoid.git"
 
   depends_on "crystal" => :build
-  depends_on "openssl" => :build
+  depends_on "openssl@3"
 
   def install
     components = ["sparoid"]
