@@ -10,6 +10,11 @@ class Sparoid < Formula
   depends_on "openssl@3"
   depends_on "pcre2"
 
+  on_linux do
+    depends_on "nftables"
+    depends_on "zlib-ng-compat"
+  end
+
   def install
     components = ["sparoid"]
     components << "sparoid-server" if OS.linux?
