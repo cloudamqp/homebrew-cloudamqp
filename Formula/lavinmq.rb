@@ -49,7 +49,12 @@ class Lavinmq < Formula
     pid = fork do
       exec bin/"lavinmq", "--data-dir", testpath/"data"
     end
-    sleep 3
+    Timeout.timeout(30) do
+      shell_output("#{bin}/lavinmqctl status")
+    rescue RuntimeError
+      sleep 1
+      retry
+    end
     output = shell_output("#{bin}/lavinmqctl status")
     assert_match "Uptime", output
   ensure
