@@ -6,6 +6,7 @@ class Lavinmq < Formula
   license "Apache-2.0"
   head "https://github.com/cloudamqp/lavinmq.git", branch: "main"
 
+  depends_on "coreutils" => :build # GNU install (Makefile uses `install -D -t`)
   depends_on "crystal" => :build
   depends_on "help2man" => :build
   depends_on "bdw-gc"
@@ -19,16 +20,15 @@ class Lavinmq < Formula
   end
 
   def install
-    system "make", "bin/lavinmq", "bin/lavinmqctl", "bin/lavinmqperf", "DOCS="
-    system "make", "man"
+    ENV.prepend_path "PATH", Formula["coreutils"].opt_libexec/"gnubin"
 
-    bin.install "bin/lavinmq"
-    bin.install "bin/lavinmqctl"
-    bin.install "bin/lavinmqperf"
-
-    man1.install "man1/lavinmq.1"
-    man1.install "man1/lavinmqctl.1"
-    man1.install "man1/lavinmqperf.1"
+    system "make", "install",
+           "DOCS=",
+           "PREFIX=#{prefix}",
+           "SYSCONFDIR=#{buildpath}/stage/etc",
+           "UNITDIR=#{buildpath}/stage/systemd",
+           "SYSUSERSDIR=#{buildpath}/stage/sysusers",
+           "SHAREDSTATEDIR=#{buildpath}/stage/var"
 
     unless (pkgetc/"lavinmq.ini").exist?
       pkgetc.install "extras/lavinmq.ini"
