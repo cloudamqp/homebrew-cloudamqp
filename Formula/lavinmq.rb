@@ -49,7 +49,11 @@ class Lavinmq < Formula
     pid = fork do
       exec bin/"lavinmq", "--data-dir", testpath/"data"
     end
-    sleep 3
+    30.times do
+      break if File.exist?("/tmp/lavinmqctl.sock")
+
+      sleep 1
+    end
     output = shell_output("#{bin}/lavinmqctl status")
     assert_match "Uptime", output
   ensure
