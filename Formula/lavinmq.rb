@@ -6,7 +6,6 @@ class Lavinmq < Formula
   license "Apache-2.0"
   head "https://github.com/cloudamqp/lavinmq.git", branch: "main"
 
-  depends_on "coreutils" => :build # GNU install (Makefile uses `install -D -t`)
   depends_on "crystal" => :build
   depends_on "help2man" => :build
   depends_on "bdw-gc"
@@ -14,13 +13,18 @@ class Lavinmq < Formula
   depends_on "openssl@3"
   depends_on "pcre2"
 
+  on_macos do
+    # GNU install (Makefile uses `install -D -t`); Linux's /usr/bin/install is already GNU.
+    depends_on "coreutils" => :build
+  end
+
   on_linux do
     depends_on "pkgconf" => :build
     depends_on "zlib-ng-compat"
   end
 
   def install
-    ENV.prepend_path "PATH", Formula["coreutils"].opt_libexec/"gnubin"
+    ENV.prepend_path "PATH", Formula["coreutils"].opt_libexec/"gnubin" if OS.mac?
 
     system "make", "install",
            "DOCS=",
