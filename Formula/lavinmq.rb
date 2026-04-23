@@ -13,22 +13,26 @@ class Lavinmq < Formula
   depends_on "openssl@3"
   depends_on "pcre2"
 
+  on_macos do
+    # GNU install (Makefile uses `install -D -t`); Linux's /usr/bin/install is already GNU.
+    depends_on "coreutils" => :build
+  end
+
   on_linux do
     depends_on "pkgconf" => :build
     depends_on "zlib-ng-compat"
   end
 
   def install
-    system "make", "bin/lavinmq", "bin/lavinmqctl", "bin/lavinmqperf", "DOCS="
-    system "make", "man"
+    ENV.prepend_path "PATH", Formula["coreutils"].opt_libexec/"gnubin" if OS.mac?
 
-    bin.install "bin/lavinmq"
-    bin.install "bin/lavinmqctl"
-    bin.install "bin/lavinmqperf"
-
-    man1.install "man1/lavinmq.1"
-    man1.install "man1/lavinmqctl.1"
-    man1.install "man1/lavinmqperf.1"
+    system "make", "install",
+           "DOCS=",
+           "PREFIX=#{prefix}",
+           "SYSCONFDIR=#{buildpath}/stage/etc",
+           "UNITDIR=#{buildpath}/stage/systemd",
+           "SYSUSERSDIR=#{buildpath}/stage/sysusers",
+           "SHAREDSTATEDIR=#{buildpath}/stage/var"
 
     unless (pkgetc/"lavinmq.ini").exist?
       pkgetc.install "extras/lavinmq.ini"
