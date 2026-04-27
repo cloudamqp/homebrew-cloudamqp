@@ -26,6 +26,8 @@ class Lavinmq < Formula
   def install
     ENV.prepend_path "PATH", Formula["coreutils"].opt_libexec/"gnubin" if OS.mac?
 
+    inreplace "extras/lavinmq.ini", /^data_dir.*/, "data_dir = #{var}/lavinmq"
+
     system "make", "install",
            "DOCS=",
            "PREFIX=#{prefix}",
@@ -34,10 +36,7 @@ class Lavinmq < Formula
            "SYSUSERSDIR=#{buildpath}/stage/sysusers",
            "SHAREDSTATEDIR=#{buildpath}/stage/var"
 
-    unless (pkgetc/"lavinmq.ini").exist?
-      pkgetc.install "extras/lavinmq.ini"
-      inreplace pkgetc/"lavinmq.ini", /^data_dir.*/, "data_dir = #{var}/lavinmq"
-    end
+    pkgetc.install "extras/lavinmq.ini"
   end
 
   def post_install
