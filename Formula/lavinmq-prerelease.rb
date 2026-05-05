@@ -1,10 +1,14 @@
-class Lavinmq < Formula
-  desc "Message broker implementing the AMQP 0-9-1 and MQTT protocols"
+class LavinmqPrerelease < Formula
+  desc "Message broker implementing the AMQP 0-9-1 and MQTT protocols (pre-release)"
   homepage "https://lavinmq.com"
-  url "https://github.com/cloudamqp/lavinmq/archive/refs/tags/v2.7.1.tar.gz"
-  sha256 "e071943c001d07d0876e6da02248b7226ad65f28bb75062e3cd5fa05de2773da"
+  url "https://github.com/cloudamqp/lavinmq/archive/refs/tags/v2.8.0-rc.1.tar.gz"
+  sha256 "9c65aa062e17243a62c379c78ae9a79b74badced9a1d1cb3771fe6cb907c590a"
   license "Apache-2.0"
-  head "https://github.com/cloudamqp/lavinmq.git", branch: "main"
+
+  livecheck do
+    url :stable
+    regex(/^v?(\d+(?:\.\d+)+-(?:rc|beta|alpha)(?:\.\d+)?)$/i)
+  end
 
   depends_on "crystal" => :build
   depends_on "help2man" => :build
@@ -22,6 +26,8 @@ class Lavinmq < Formula
     depends_on "pkgconf" => :build
     depends_on "zlib-ng-compat"
   end
+
+  conflicts_with "lavinmq", because: "both install `lavinmq` binaries"
 
   def install
     ENV.prepend_path "PATH", Formula["coreutils"].opt_libexec/"gnubin" if OS.mac?
@@ -45,9 +51,7 @@ class Lavinmq < Formula
   end
 
   test do
-    pid = fork do
-      exec bin/"lavinmq", "--data-dir", testpath/"data"
-    end
+    pid = spawn bin/"lavinmq", "--data-dir", testpath/"data"
     30.times do
       break if File.exist?("/tmp/lavinmqctl.sock")
 
