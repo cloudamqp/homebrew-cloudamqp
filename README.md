@@ -16,6 +16,18 @@ brew install https://raw.githubusercontent.com/cloudamqp/homebrew-cloudamqp/main
 
 `brew help`, `man brew` or check [Homebrew's documentation](https://docs.brew.sh).
 
+## LavinMQ
+
+Three channels are available, install only one:
+
+| Channel     | Source                                                                | Command                                                |
+| ----------- | --------------------------------------------------------------------- | ------------------------------------------------------ |
+| Stable      | [homebrew-core](https://formulae.brew.sh/formula/lavinmq)             | `brew install lavinmq`                                 |
+| Pre-release | This tap, latest `*-rc.*` / `*-beta.*` tag                            | `brew install cloudamqp/cloudamqp/lavinmq-prerelease`  |
+| Nightly     | Built from `main` via the core formula's `head` block                 | `brew install --HEAD lavinmq`                          |
+
+`lavinmq-prerelease` conflicts with `lavinmq` since both ship the same binaries.
+
 ## Updating formulas
 
 To bump a formula to a new version:
@@ -34,7 +46,7 @@ How to test PRs/branches of this repo:
 brew tap cloudamqp/cloudamqp
 cd $(brew --repository cloudamqp/cloudamqp)
 git checkout <branch name>
-brew install lavinmq
+brew install <formula>
 ```
 
 If you already have it tapped:
@@ -43,5 +55,5 @@ If you already have it tapped:
 cd $(brew --repository cloudamqp/cloudamqp)
 git fetch origin
 git checkout <branch name>
-brew reinstall lavinmq
+brew reinstall <formula>
 ```
