@@ -28,7 +28,7 @@ jobs:
           if [ -n "$input" ]; then
             formulas=$(printf '%s\n' "$input" | jq -Rcn '[inputs | split(" ")[] | select(length > 0)]')
           else
-            formulas=$(ls Formula/*.rb | xargs -n1 basename | sed 's/\.rb$//' | jq -Rcn '[inputs]')
+            formulas=$(for f in Formula/*.rb; do basename "$f" .rb; done | jq -Rcn '[inputs]')
           fi
           echo "formulas=$formulas" >> "$GITHUB_OUTPUT"
           echo "Discovered: $formulas"
