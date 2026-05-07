@@ -1,0 +1,48 @@
+name: Bump formulas
+on:
+  schedule:
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+    inputs:
+      formula:
+        description: "Formula to bump (leave blank for all)"
+        required: false
+        type: string
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  bump:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+
+      - name: Bump formulas
+        env:
+          HOMEBREW_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -u
+          formulas="${{ inputs.formula }}"
+          if [ -z "$formulas" ]; then
+            formulas="sparoid amqpcat cloudamqp-cli"
+          fi
+          for f in $formulas; do
+            echo "::group::$f"
+            output=$(brew bump --open-pr --no-fork --no-browse \
+              "cloudamqp/cloudamqp/$f" 2>&1) || true
+            echo "$output"
+            pr_url=$(printf '%s\n' "$output" \
+              | grep -oE 'https://github\.com/[^[:space:]]+/pull/[0-9]+' \
+              | tail -n1)
+            if [ -n "$pr_url" ]; then
+              pr_num=${pr_url##*/}
+              branch=$(gh pr view "$pr_num" --json headRefName --jq .headRefName)
+              echo "Triggering CI for PR #${pr_num} on branch ${branch}"
+              gh workflow run main.yml --ref "$branch"
+            fi
+            echo "::endgroup::"
+          done

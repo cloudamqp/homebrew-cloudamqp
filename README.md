@@ -30,7 +30,12 @@ Three channels are available, install only one:
 
 ## Updating formulas
 
-To bump a formula to a new version:
+A daily GitHub Actions workflow (`.github/workflows/bump.yml`) runs `brew bump`
+against each formula and opens a PR when an upstream release is detected via
+`brew livecheck`. It can also be triggered manually from the Actions tab, and
+optionally limited to a single formula.
+
+To bump a formula manually:
 
 ```shell
 brew bump-formula-pr --no-fork --version=<version> <formula>
