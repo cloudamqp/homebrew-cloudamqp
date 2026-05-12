@@ -3,6 +3,7 @@ on:
   push:
     branches: main
   pull_request:
+  workflow_dispatch:
 jobs:
   test-bot:
     runs-on: ${{ matrix.os }}
@@ -41,5 +42,5 @@ jobs:
             echo "::error::brew test-bot failed"
             exit 1
           fi
-        if: github.event_name == 'pull_request'
+        if: github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'
         shell: bash
