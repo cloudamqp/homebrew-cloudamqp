@@ -43,6 +43,11 @@ jobs:
     steps:
       - name: Set up Homebrew
         uses: Homebrew/actions/setup-homebrew@main
+        with:
+          # `brew bump --open-pr` invokes `bump-formula-pr`, which runs
+          # `brew audit` and needs homebrew/core tapped to resolve deps
+          # like crystal/openssl@3/pcre2/etc.
+          core: true
 
       - name: Bump ${{ matrix.formula }}
         env:
