@@ -49,13 +49,17 @@ jobs:
           HOMEBREW_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          set -u
-          output=$(brew bump --open-pr --no-fork --no-browse \
-            "cloudamqp/cloudamqp/${{ matrix.formula }}" 2>&1) || true
+          set -eu
+          output=$(brew bump --open-pr --no-fork \
+            "cloudamqp/cloudamqp/${{ matrix.formula }}" 2>&1)
           echo "$output"
+          # brew bump prints the new PR URL on a line of its own (see
+          # bump-formula-pr.rb's `puts url` branch). Anchoring on ^...$
+          # ensures we don't pick up URLs from "Duplicate pull requests:"
+          # or "Maybe duplicate pull requests:" lines.
           pr_url=$(printf '%s\n' "$output" \
-            | grep -oE 'https://github\.com/[^[:space:]]+/pull/[0-9]+' \
-            | tail -n1)
+            | grep -E '^https://github\.com/[^[:space:]]+/pull/[0-9]+$' \
+            | tail -n1 || true)
           if [ -n "$pr_url" ]; then
             pr_num=${pr_url##*/}
             branch=$(gh pr view "$pr_num" --json headRefName --jq .headRefName)
