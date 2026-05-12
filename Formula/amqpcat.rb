@@ -6,7 +6,14 @@ class Amqpcat < Formula
   head "https://github.com/cloudamqp/amqpcat.git", branch: "main"
 
   depends_on "crystal" => :build
+  depends_on "bdw-gc"
   depends_on "openssl@3"
+  depends_on "pcre2"
+
+  on_linux do
+    depends_on "pkgconf" => :build
+    depends_on "zlib-ng-compat"
+  end
 
   def install
     system "shards", "build", "--release", "--production", "--no-debug"
