@@ -4,6 +4,10 @@ on:
     branches: main
   pull_request:
   workflow_dispatch:
+env:
+  # GHA runners are ephemeral VMs; Homebrew's Linux sandbox would just
+  # add a bubblewrap install step with no security benefit here.
+  HOMEBREW_NO_SANDBOX_LINUX: 1
 jobs:
   test-bot:
     runs-on: ${{ matrix.os }}
@@ -19,10 +23,10 @@ jobs:
     steps:
       - name: Set up Homebrew
         id: set-up-homebrew
-        uses: Homebrew/actions/setup-homebrew@master
+        uses: Homebrew/actions/setup-homebrew@main
       - name: Cache Homebrew Bundler RubyGems
         id: cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ${{ steps.set-up-homebrew.outputs.gems-path }}
           key: ${{ runner.os }}-rubygems-${{ steps.set-up-homebrew.outputs.gems-hash }}
