@@ -1,0 +1,80 @@
+name: Bump formulas
+on:
+  schedule:
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+    inputs:
+      formula:
+        description: "Formula to bump (leave blank for all)"
+        required: false
+        type: string
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    outputs:
+      formulas: ${{ steps.list.outputs.formulas }}
+    steps:
+      - uses: actions/checkout@v6
+      - name: List formulas
+        id: list
+        run: |
+          set -eu
+          input="${{ inputs.formula }}"
+          if [ -n "$input" ]; then
+            formulas=$(printf '%s\n' "$input" | jq -Rcn '[inputs | split(" ")[] | select(length > 0)]')
+          else
+            formulas=$(for f in Formula/*.rb; do basename "$f" .rb; done | jq -Rcn '[inputs]')
+          fi
+          echo "formulas=$formulas" >> "$GITHUB_OUTPUT"
+          echo "Discovered: $formulas"
+
+  bump:
+    needs: discover
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        formula: ${{ fromJSON(needs.discover.outputs.formulas) }}
+    steps:
+      - name: Set up Homebrew
+        uses: Homebrew/actions/setup-homebrew@main
+        with:
+          # `brew bump --open-pr` invokes `bump-formula-pr`, which runs
+          # `brew audit` and needs homebrew/core tapped to resolve deps
+          # like crystal/openssl@3/pcre2/etc.
+          core: true
+
+      - name: Bump ${{ matrix.formula }}
+        env:
+          HOMEBREW_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -u
+          # Capture status separately so we always print brew's output;
+          # `bash -e {0}` otherwise exits on the failed assignment before
+          # the echo runs and the diagnostic is lost.
+          status=0
+          output=$(brew bump --open-pr --no-fork \
+            "cloudamqp/cloudamqp/${{ matrix.formula }}" 2>&1) || status=$?
+          echo "$output"
+          if [ "$status" -ne 0 ]; then
+            exit "$status"
+          fi
+          # brew bump prints the new PR URL on a line of its own (see
+          # bump-formula-pr.rb's `puts url` branch). Anchoring on ^...$
+          # ensures we don't pick up URLs from "Duplicate pull requests:"
+          # or "Maybe duplicate pull requests:" lines.
+          pr_url=$(printf '%s\n' "$output" \
+            | grep -E '^https://github\.com/[^[:space:]]+/pull/[0-9]+$' \
+            | tail -n1 || true)
+          if [ -n "$pr_url" ]; then
+            pr_num=${pr_url##*/}
+            branch=$(gh pr view "$pr_num" --json headRefName --jq .headRefName)
+            echo "Triggering CI for PR #${pr_num} on branch ${branch}"
+            gh workflow run main.yml --ref "$branch"
+          fi
