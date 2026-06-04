@@ -53,6 +53,11 @@ jobs:
         env:
           HOMEBREW_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # `brew bump-formula-pr` only sets git author/committer from
+          # these env vars (utils/git.rb `set_name_email!`). Without them
+          # the runner has no git identity and `git commit` exits 128.
+          HOMEBREW_GIT_NAME: github-actions[bot]
+          HOMEBREW_GIT_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
         run: |
           set -u
           # Capture status separately so we always print brew's output;
