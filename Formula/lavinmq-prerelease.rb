@@ -30,7 +30,7 @@ class LavinmqPrerelease < Formula
   conflicts_with "lavinmq", because: "both install `lavinmq` binaries"
 
   def install
-    ENV.prepend_path "PATH", Formula["coreutils"].opt_libexec/"gnubin" if OS.mac?
+    ENV.prepend_path "PATH", formula_opt_libexec("coreutils")/"gnubin" if OS.mac?
 
     inreplace "extras/lavinmq.ini", /^data_dir.*/, "data_dir = #{var}/lavinmq"
 
