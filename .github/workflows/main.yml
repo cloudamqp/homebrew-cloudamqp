@@ -34,8 +34,11 @@ jobs:
       - run: brew test-bot --only-setup
       - run: brew test-bot --only-tap-syntax
       - name: Build formulae
+        env:
+          # Plain output so the "==> FAILED" grep below can match.
+          HOMEBREW_NO_COLOR: 1
         run: |
-          set +e
+          set +e -o pipefail
           brew test-bot --only-formulae 2>&1 | tee test-bot.log
           exit_code=$?
           if [ $exit_code -ne 0 ] || grep -q "^==> FAILED" test-bot.log; then
