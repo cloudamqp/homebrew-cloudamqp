@@ -51,13 +51,20 @@ class LavinmqPrerelease < Formula
   end
 
   test do
-    pid = spawn bin/"lavinmq", "--data-dir", testpath/"data"
+    # The sandbox only permits socket connections under testpath.
+    socket = testpath/"lavinmqctl.sock"
+    pid = spawn bin/"lavinmq", "--data-dir", testpath/"data",
+                "--control-unix-path", socket,
+                "--amqp-port", free_port.to_s,
+                "--mqtt-port", free_port.to_s,
+                "--http-port", free_port.to_s,
+                "--metrics-http-port", free_port.to_s
     30.times do
-      break if File.exist?("/tmp/lavinmqctl.sock")
+      break if socket.exist?
 
       sleep 1
     end
-    output = shell_output("#{bin}/lavinmqctl status")
+    output = shell_output("#{bin}/lavinmqctl --control-unix-path #{socket} status")
     assert_match "Uptime", output
   ensure
     Process.kill("TERM", pid)
