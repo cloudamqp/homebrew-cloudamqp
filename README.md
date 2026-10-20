@@ -18,15 +18,12 @@ brew install https://raw.githubusercontent.com/cloudamqp/homebrew-cloudamqp/main
 
 ## LavinMQ
 
-Three channels are available, install only one:
+LavinMQ lives in homebrew-core. Install the stable release, or build `main` with `--HEAD`:
 
 | Channel     | Source                                                                | Command                                                |
 | ----------- | --------------------------------------------------------------------- | ------------------------------------------------------ |
 | Stable      | [homebrew-core](https://formulae.brew.sh/formula/lavinmq)             | `brew install lavinmq`                                 |
-| Pre-release | This tap, latest `*-rc.*` / `*-beta.*` tag                            | `brew install cloudamqp/cloudamqp/lavinmq-prerelease`  |
 | Nightly     | Built from `main` via the core formula's `head` block                 | `brew install --HEAD lavinmq`                          |
-
-`lavinmq-prerelease` conflicts with `lavinmq` since both ship the same binaries.
 
 ## Updating formulas
 
